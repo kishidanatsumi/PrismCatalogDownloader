@@ -148,10 +148,20 @@ internal class Program
             if (catalog.Types[info.TypeIdx] == "catalog")
                 continue;
 
-            Console.WriteLine($"Downloading {name}...");
             if (name.Contains('/'))
                 Directory.CreateDirectory(Path.Join(outputDirectory, Path.GetDirectoryName(name)));
 
+            //Add check to avoid repeat download
+            if (File.Exists(Path.Join(outputDirectory, name)))
+            {
+                Console.WriteLine("{name} exists, skipped.");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine($"Downloading {name}...");   
+            }
+            
             DownloadAsset(Path.Join(outputDirectory, name), info);
             //foreach (var contents in info.ContentAddressCrcs)
             //{
