@@ -87,7 +87,8 @@ internal class Program
 
         var list = new Dictionary<string, List<ReadableCatalogEntry>>();
         await DumpAndParseCatalog(outputPath, "root", manifest, list);
-            
+
+        Console.WriteLine($"Writing assetinfo.json...");   
         await File.WriteAllTextAsync(Path.Join(outputPath, "assetinfo.json"), JsonSerializer.Serialize(list, Options));
 
         var rawFolder = Path.Join(outputPath, "root", "raw");
@@ -154,7 +155,7 @@ internal class Program
             //Add check to avoid repeat download
             if (File.Exists(Path.Join(outputDirectory, name)))
             {
-                Console.WriteLine("{name} exists, skipped.");
+                Console.WriteLine($"{name} exists, skipped.");
                 continue;
             }
             else
